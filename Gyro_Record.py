@@ -114,9 +114,6 @@ current_directory11 = os.path.abspath('/home/pi/Desktop/Gyro_log/Gyro-acc/roll')
 current_directory12 = os.path.abspath('/home/pi/Desktop/Gyro_log/Gyro-acc/pitch')
 current_directory13 = os.path.abspath('/home/pi/Desktop/Gyro_log/Gyro-acc/gyroXangle')
 current_directory14 = os.path.abspath('/home/pi/Desktop/Gyro_log/Gyro-acc/gyroYangle')
-current_directory15 = os.path.abspath('/home/pi/Desktop/Gyro_log/Counter')
-current_directory16 = os.path.abspath('/home/pi/Desktop/Gyro_log/Score')
-current_directory17 = os.path.abspath('/home/pi/Desktop/Gyro_log/Last-score')
 # 
 angle_x = 0
 angle_y = 0
@@ -137,11 +134,6 @@ log_file_roll = open(current_directory11 + '/' +filename, "a", 128)
 log_file_pitch = open(current_directory12 + '/' +filename, "a", 128)
 log_file_gyroXangle = open(current_directory13 + '/' +filename, "a", 128)
 log_file_gyroYangle = open(current_directory14 + '/' +filename, "a", 128)
-log_file_counter = open(current_directory15 + '/' +filename, "a", 128)
-#log_file_score = open(current_directory16 + '/' +filename, "w", 128)
-log_file_last_score = open(current_directory17 + '/' +'Score', "r")
-last_score = log_file_last_score.readline()
-log_file_last_score.close()
     
 flag = 0
 timer = time.time()
@@ -226,23 +218,7 @@ while True:
 	       	gyroXAngle = kalAngleX
 	    if ((gyroYAngle < -180) or (gyroYAngle > 180)):
 	       	gyroYAngle = kalAngleY
-	    
-	    ######calculate Score#######	
-	    if((abs(roll) > 50 or abs(Gx) > 5) and (abs(pitch) > 50 or abs(Gy) > 5) and (abs(Az) > 1.9 or abs(Gz) > 8)):
-		score = 0.9
-	    elif(((abs(roll) > 50 or abs(Gx) > 5) and (abs(pitch) > 50 or abs(Gy) > 5)) or ((abs(roll) > 50 or abs(Gx) > 5) and (abs(Az) > 1.9 or abs(Gz) > 8)) or ((abs(pitch) > 50 or abs(Gy) > 5) and (abs(Az) > 1.9 or abs(Gz) > 8))):
-		score = 0.5
-	    elif(abs(roll) > 50 or abs(Gx) > 5 or abs(pitch) > 50 or abs(Gy) > 5 or abs(Az) > 1.9 or abs(Gz) > 8):
-		score = 0.2
-	    else:
-		score = 0 
-		
-	    counter = counter + 1
-	    score_IMU = ((score_IMU * (counter-1)) + score)  / counter
-	    time.sleep(0.005)
-	    
-	except Exception as exc:
-		flag += 1
+	 
 
 	#final_score = scores(self,Az,Gx,Gy,Gz,roll,pitch)
 	log_file_Ax.write(str(Ax/16384.0) + "\n")
@@ -259,16 +235,8 @@ while True:
 	log_file_compy.write(str(compAngleY) + "\n")
 	log_file_gyroXangle.write(str(gyroXAngle) + "\n")
 	log_file_gyroYangle.write(str(gyroYAngle) + "\n")
-	log_file_counter.write(str(score) + "\n")
 	localtime = time.localtime(time.time())
 	current_time = str(localtime[0])+"-"+str(localtime[1])+"-"+str(localtime[2])+"-"+str(localtime[3])+"-"+str(localtime[4])+"-"+str(localtime[5])
-        final_score = (float(last_score) + score_IMU)/2
-	log_file_score = open(current_directory16 + '/' +filename, "w", 128)
-	log_file_score.write("Time:" + str(current_time) + "," + "\t" + "Current Trip Score:" + str(score_IMU) + "\t" + "Final Score IMU: " + str(final_score) + "\n")
-	log_file_score.close()
-	log_file_last_score = open(current_directory17 + '/' +'Score', "w", 128)
-	log_file_last_score.write(str(final_score))
-	log_file_last_score.close()
 log_angle_x.close()
 log_angle_y.close()
 log_angle_z.close()
@@ -286,4 +254,3 @@ log_file_compx.close()
 log_file_compy.close()
 log_file_gyroXangle.close()
 log_file_gyroYangle.close()
-log_file_counter.close()
