@@ -21,10 +21,15 @@ Data Collection:
 -Data transmission: The GSM A6 module wirelessly transmits the data collected to the CAR Portal Server (client.py).
 
 Before proceeding, run:
+
 Note: For the following command line instructions, do not type the '#', that is only to indicate that it is a command to enter. 
 
 #sudo apt-get update
+
 #sudo apt-get upgrade
+
 #sudo apt-get autoremove
+
 #sudo reboot
+
 #sudo apt-get install python-serial
