@@ -1,6 +1,6 @@
 # Car_abuse_rate
 
-Calculate the Mechanical and the Body treatments scores
+Calculate the Mechanical and the Body teatment data
 
 Hardware Required:
 
